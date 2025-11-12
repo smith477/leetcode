@@ -8,7 +8,7 @@ My solutions to LeetCode problems, practicing algorithms and data structures.
 algorithms/     # Core algorithm implementations
 examples/       # Common data structures (trees, linked lists)
 problems/       # LeetCode problem solutions
-util/          # Helper functions
+util/           # Helper functions
 ```
 
 ## Focus Areas
