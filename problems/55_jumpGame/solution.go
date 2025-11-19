@@ -2,22 +2,20 @@ package main
 
 import "fmt"
 
+// Greedy approach working backwards from end
+// Time: O(n), Space: O(1)
+// Start from last position as goal, move goal backwards if current position can reach it
+// If goal reaches index 0, the start can reach the end
 func canJump(nums []int) bool {
-	maxReach := 0
+	goal := len(nums) - 1
 
-	for i := 0; i < len(nums); i++ {
-		if i > maxReach {
-			return false
-		}
-
-		maxReach = max(maxReach, i+nums[i])
-
-		if maxReach >= len(nums)-1 {
-			return true
+	for i := len(nums) - 2; i >= 0; i-- {
+		if i+nums[i] >= goal {
+			goal = i
 		}
 	}
 
-	return maxReach >= len(nums)-1
+	return goal == 0
 }
 
 func main() {

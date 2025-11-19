@@ -2,10 +2,11 @@ package main
 
 import "fmt"
 
-// Time complexity O(n), Space complexity O(1)
-// Fibonacci
-// Start with 0 profit because you may have negative profit later
-// Just keep maxProfit and minPrice for max potential profit
+// Greedy single-pass approach
+// Time: O(n), Space: O(1)
+// Track minimum price seen so far and maximum profit
+// For each price, calculate profit if sold today and update max profit
+// Update minimum price for future calculations
 func maxProfit(prices []int) int {
 
 	maxProfit := 0

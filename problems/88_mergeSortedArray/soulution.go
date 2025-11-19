@@ -5,6 +5,10 @@ import (
 	"reflect"
 )
 
+// Two-pointer approach working backwards
+// Time: O(m+n), Space: O(1)
+// Fill nums1 from the end, comparing largest unplaced elements from both arrays
+// Stop when nums2 exhausted (remaining nums1 elements already in correct position)
 func merge(nums1 []int, m int, nums2 []int, n int) {
 	totalCount := m + n - 1
 	first := m - 1
@@ -21,6 +25,13 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 		totalCount--
 	}
 }
+
+// func merge(nums1 []int, m int, nums2 []int, n int) {
+// 	for j, i := 0, m; j < n; j, i = j+1, i+1 {
+// 		nums1[i] = nums2[j]
+// 	}
+// 	sort.Ints(nums1)
+// }
 
 func main() {
 	// Example 1

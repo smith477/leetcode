@@ -5,6 +5,10 @@ import (
 	"reflect"
 )
 
+// Three-step reversal approach
+// Time: O(n), Space: O(1)
+// Reverse entire array, then reverse first k elements, then reverse remaining elements
+// This rotates array right by k positions in-place
 func rotate(nums []int, k int) {
 	if k == 0 || len(nums) <= 1 {
 		return

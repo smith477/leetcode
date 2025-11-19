@@ -5,6 +5,10 @@ import (
 	"math/rand"
 )
 
+// Hash map + Dynamic array for O(1) operations
+// Map stores value -> index mapping for O(1) lookup
+// Array stores actual values for O(1) random access
+// Remove: swap with last element, then pop (avoids shifting)
 type RandomizedSet struct {
 	NumberList []int
 	NumbersMap map[int]int

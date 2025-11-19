@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+// Greedy approach - capture all upward price movements
+// Time: O(n), Space: O(1)
+// Sum all positive price differences (buy before each increase, sell at peak)
+// Equivalent to buying at every valley and selling at every peak
 func maxProfit(prices []int) int {
 
 	totalProfit := 0

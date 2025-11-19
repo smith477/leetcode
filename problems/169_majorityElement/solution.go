@@ -2,33 +2,55 @@ package main
 
 import "fmt"
 
-// Hash map
-// Time complexity O(n), Space complexity O(n)
-// In hashmap save number of appearances for each number
-// When number is found, check if count >= n/2, if it is return that number
-// Increment the count by one for that number
+// Hash map approach
+// Time: O(n), Space: O(n)
+// Track count of each number in hash map
+// Return the number when its count exceeds n/2
+// func majorityElement(nums []int) int {
+
+// 	if len(nums) == 1 {
+// 		return nums[0]
+// 	}
+
+// 	n := len(nums)
+
+// 	numbersMap := make(map[int]int)
+
+// 	for _, number := range nums {
+
+// 		if count, found := numbersMap[number]; found {
+// 			if count >= n/2 {
+// 				return number
+// 			}
+// 		}
+
+// 		numbersMap[number] += 1
+// 	}
+
+// 	return -1
+// }
+
+// Boyer-Moore Voting Algorithm
+// Time: O(n), Space: O(1)
+// Track candidate majority element and its count
+// Increment count when seeing candidate, decrement when seeing different element
+// When count reaches 0, switch candidate to current element
+// Guaranteed to find majority element (appears > n/2 times)
 func majorityElement(nums []int) int {
+	majorElement, count := 0, 0
 
-	if len(nums) == 1 {
-		return nums[0]
-	}
-
-	n := len(nums)
-
-	numbersMap := make(map[int]int)
-
-	for _, number := range nums {
-
-		if count, found := numbersMap[number]; found {
-			if count >= n/2 {
-				return number
-			}
+	for i := 0; i < len(nums); i++ {
+		if count == 0 {
+			count++
+			majorElement = nums[i]
+		} else if majorElement == nums[i] {
+			count++
+		} else {
+			count--
 		}
-
-		numbersMap[number] += 1
 	}
 
-	return -1
+	return majorElement
 }
 
 func main() {

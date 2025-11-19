@@ -2,6 +2,11 @@ package main
 
 import "fmt"
 
+// Two-pointer approach allowing up to 2 duplicates
+// Time: O(n), Space: O(1)
+// Use k to track position for next valid element
+// Compare current element with element at k-2, if different then we can include it
+// This ensures at most 2 consecutive duplicates (current can match k-1 but not k-2)
 func removeDuplicates(nums []int) int {
 	if len(nums) == 1 {
 		return 1

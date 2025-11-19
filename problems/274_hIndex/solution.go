@@ -5,6 +5,12 @@ import (
 	"sort"
 )
 
+// Alternative: Sorting approach (ascending order)
+// Time: O(n log n), Space: O(1)
+// Sort citations in ascending order
+// Start with max possible h-index (n papers)
+// Decrease h for each paper with citations < current h value
+// Remaining h is the answer
 // func hIndex(citations []int) int {
 
 // 	maxH := len(citations)
@@ -20,6 +26,11 @@ import (
 // 	return maxH
 // }
 
+// Sorting approach (descending order)
+// Time: O(n log n), Space: O(1)
+// Sort citations in descending order
+// Count papers where citation count >= paper position (1-indexed)
+// h-index is the count of papers meeting this condition
 func hIndex(citations []int) int {
 
 	h := 0

@@ -2,20 +2,26 @@ package main
 
 import "fmt"
 
+// Greedy approach with implicit BFS levels
+// Time: O(n), Space: O(1)
+// Track the farthest position reachable in current "jump level"
+// When reaching end of current level, increment jumps and move to next level
+// Each level represents all positions reachable with same number of jumps
 func jump(nums []int) int {
 
-	maxReach, farthest, count := 0, 0, 0
+	n := len(nums) - 1
+	i, maxReachable, lastJumpedPos, jumps := 0, 0, 0, 0
 
-	for i := 0; i < len(nums)-1; i++ {
-		maxReach = max(maxReach, nums[i]+i)
-
-		if farthest == i {
-			farthest = maxReach
-			count++
+	for lastJumpedPos < n {
+		maxReachable = max(maxReachable, nums[i]+i)
+		if i == lastJumpedPos {
+			lastJumpedPos = maxReachable
+			jumps++
 		}
+		i++
 	}
 
-	return count
+	return jumps
 }
 
 func main() {
