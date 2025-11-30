@@ -7,6 +7,12 @@ import (
 
 type TreeNode = util.TreeNode
 
+// BFS (Breadth-First Search)
+// Time: O(n), Space: O(n) where n is number of nodes
+// Process tree level by level using a queue
+// For each level, use a for loop to process all nodes at that level
+// Add node values to currentLevel array and append children to queue
+// After processing all nodes in the level, append currentLevel to result
 func levelOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return nil

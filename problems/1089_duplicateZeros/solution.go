@@ -11,6 +11,10 @@ func duplicateZeros(arr []int) {
 		}
 	}
 
+	if zeros == 0 {
+		return
+	}
+
 	for i := len(arr) - 1; i >= 0; i-- {
 		if arr[i] == 0 {
 			if zeros+i < len(arr) {

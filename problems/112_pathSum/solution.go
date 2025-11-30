@@ -7,7 +7,11 @@ import (
 
 type TreeNode = util.TreeNode
 
-// Recursive (for comparison)
+// Recursive DFS
+// Time: O(n), Space: O(h) where h is height of tree
+// Go deep into tree subtracting current node value from targetSum at each step
+// When reaching a leaf node (no left/right children), check if targetSum equals leaf's value
+// If match found at any leaf, path exists and is reachable
 func hasPathSum(root *TreeNode, targetSum int) bool {
 	if root == nil {
 		return false

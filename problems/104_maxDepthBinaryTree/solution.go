@@ -11,6 +11,11 @@ func init() {
 	debug.SetMemoryLimit(1)
 }
 
+// Recursive DFS
+// Time: O(n), Space: O(h) where h is height of tree
+// Recursively find max depth of left and right subtrees
+// Return 1 + max(leftDepth, rightDepth) to include current node
+// Base case: nil node returns 0
 func maxDepth(root *TreeNode) int {
 	if root == nil {
 		return 0

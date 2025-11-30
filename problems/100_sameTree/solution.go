@@ -7,6 +7,10 @@ import (
 
 type TreeNode = util.TreeNode
 
+// Recursive DFS
+// Time: O(n), Space: O(h) where h is height of tree
+// Compare current nodes, if equal recursively check left and right subtrees
+// Base case: both nil returns true, one nil returns false
 func isSameTree(p *TreeNode, q *TreeNode) bool {
 	if p == nil || q == nil {
 		return p == nil && q == nil
