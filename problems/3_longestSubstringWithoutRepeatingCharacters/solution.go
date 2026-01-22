@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// Two pointer pattern
+// Sliding window pattern
 // Time complexity O(n), Space complexity O(n)
 // Use hash map to remember bytes and their index
 // One pointer is going forward one is staying at the beginning of the subarray
