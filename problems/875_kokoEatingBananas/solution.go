@@ -3,40 +3,33 @@ package main
 import "fmt"
 
 func minEatingSpeed(piles []int, h int) int {
-
-	left, right := 1, 0
-
+	minSpeed, maxSpeed := 1, 0
 	for _, pile := range piles {
-		if pile > right {
-			right = pile
+		if pile > maxSpeed {
+			maxSpeed = pile
 		}
 	}
 
-	var mid = 0
-
-	for left < right {
-		mid = left + (right-left)/2
-
-		if canEatPile(piles, h, mid) {
-			right = mid
+	for minSpeed < maxSpeed {
+		midSpeed := minSpeed + (maxSpeed-minSpeed)/2
+		if canFinishInTime(piles, h, midSpeed) {
+			maxSpeed = midSpeed
 		} else {
-			left = mid + 1
+			minSpeed = midSpeed + 1
 		}
 	}
-
-	return left
+	return minSpeed
 }
 
-func canEatPile(piles []int, h int, k int) bool {
-
-	hours := 0
+func canFinishInTime(piles []int, hoursAvailable int, speed int) bool {
+	hoursNeeded := 0
 	for _, pile := range piles {
-		hours += (pile + k - 1) / k
-		if hours > h {
+		hoursNeeded += (pile + speed - 1) / speed
+		if hoursNeeded > hoursAvailable {
 			return false
 		}
 	}
-	return true
+	return hoursNeeded <= hoursAvailable
 }
 
 func main() {

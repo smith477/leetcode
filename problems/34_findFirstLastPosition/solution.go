@@ -12,50 +12,41 @@ import "fmt"
 // If first occurrence not found, return [-1, -1]
 // Otherwise return [firstOccurrence, lastOccurrence]
 func searchRange(nums []int, target int) []int {
-	if len(nums) == 0 {
+	if len(nums) < 2 {
+	}
+
+	leftOccurence := findOccurence(nums, target, true)
+
+	if leftOccurence == -1 {
 		return []int{-1, -1}
 	}
-	firstOccurrence := findBound(nums, target, true)
 
-	if firstOccurrence == -1 {
-		return []int{-1, -1}
-	}
+	rightOccurence := findOccurence(nums, target, false)
 
-	lastOccurrence := findBound(nums, target, false)
-
-	return []int{
-		firstOccurrence,
-		lastOccurrence,
-	}
+	return []int{leftOccurence, rightOccurence}
 }
 
-func findBound(nums []int, target int, isFirst bool) int {
-
+func findOccurence(nums []int, target int, isFirst bool) int {
 	start, end := 0, len(nums)-1
+	result := -1
 
 	for start <= end {
 		mid := start + (end-start)/2
-
 		if nums[mid] == target {
+			result = mid
 			if isFirst {
-				if mid == start || nums[mid-1] != target {
-					return mid
-				}
 				end = mid - 1
 			} else {
-				if mid == end || nums[mid+1] != target {
-					return mid
-				}
 				start = mid + 1
 			}
-		} else if nums[mid] > target {
-			end = mid - 1
-		} else {
+		} else if nums[mid] < target {
 			start = mid + 1
+		} else {
+			end = mid - 1
 		}
 	}
 
-	return -1
+	return result
 }
 
 func main() {

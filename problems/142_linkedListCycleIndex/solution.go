@@ -5,34 +5,54 @@ import (
 	"leetcode/util"
 )
 
-type Node util.ListNode
+type Node = util.ListNode
 
-func hasCycle(head *util.ListNode) *util.ListNode {
+func detectCycle(head *Node) *Node {
+	if head == nil || head.Next == nil {
+		return nil
+	}
 
 	slow, fast := head, head
 
 	for fast != nil && fast.Next != nil {
-
 		slow = slow.Next
 		fast = fast.Next.Next
 
 		if slow == fast {
-			slow = head
-			break
-		}
-	}
+			finderPointer := head
 
-	for slow != nil && fast != nil {
-		if slow == fast {
-			return slow
-		}
+			for finderPointer != slow {
+				finderPointer = finderPointer.Next
+				slow = slow.Next
+			}
 
-		slow = slow.Next
-		fast = fast.Next
+			return finderPointer
+		}
 	}
 
 	return nil
 }
+
+//func detectCycle(head *Node) *Node {
+//	if head == nil {
+//		return nil
+//	}
+//
+//	seenMap := make(map[*Node]bool)
+//	currentPointer := head
+//
+//	for currentPointer.Next != nil {
+//		if seenMap[currentPointer] {
+//			return currentPointer
+//		}
+//
+//		seenMap[currentPointer] = true
+//		currentPointer = currentPointer.Next
+//
+//	}
+//
+//	return nil
+//}
 
 func main() {
 	// Example 1: [3,2,0,-4], pos = 1

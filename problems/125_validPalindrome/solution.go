@@ -22,7 +22,6 @@ func toLowerCaseIfNeeded(c byte) byte {
 }
 
 func isPalindrome(s string) bool {
-
 	left, right := 0, len(s)-1
 
 	for left < right {

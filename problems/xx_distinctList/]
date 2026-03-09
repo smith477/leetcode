@@ -1,0 +1,42 @@
+package main
+
+import "sort"
+
+func threeSum(nums []int) [][]int {
+	if len(nums) < 2 {
+		return [][]int{{}}
+	}
+
+	sort.Ints(nums)
+
+	result := make([][]int, len(nums))
+	for i := 0; i < len(result); i++ {
+		result[i] = make([]int, 3)
+	}
+
+	for i := 0; i < len(nums)-1; i++ {
+		for i < len(nums)-1 && nums[i] == nums[i+1] {
+			i++
+		}
+
+		leftPointer, middlePointer, rightPointer := i, i+1, len(nums)-1
+
+		for leftPointer < rightPointer {
+			middlePointer = leftPointer + 1
+			sum := nums[leftPointer] + nums[middlePointer] + nums[rightPointer]
+			if sum == 0 {
+				result = append(result, []int{nums[leftPointer], nums[middlePointer], nums[rightPointer]})
+			} else if sum > 0 {
+				rightPointer--
+			} else {
+				middlePointer++
+			}
+		}
+
+	}
+
+	return [][]int{{}}
+}
+
+func main() {
+}

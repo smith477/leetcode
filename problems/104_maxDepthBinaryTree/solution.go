@@ -1,15 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"leetcode/util"
-	"runtime/debug"
 )
 
 type TreeNode = util.TreeNode
-
-func init() {
-	debug.SetMemoryLimit(1)
-}
 
 // Recursive DFS
 // Time: O(n), Space: O(h) where h is height of tree
@@ -27,6 +23,34 @@ func maxDepth(root *TreeNode) int {
 	return 1 + max(leftDepth, rightDepth)
 }
 
+func maxDepthQueue(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	queue := []*TreeNode{root}
+
+	depth := 0
+
+	for len(queue) > 0 {
+
+		node := queue[0]
+		queue = queue[1:]
+
+		if node.Left != nil {
+			queue = append(queue, node.Left)
+		}
+
+		if node.Right != nil {
+			queue = append(queue, node.Right)
+		}
+
+		depth++
+	}
+
+	return depth
+}
+
 func main() {
 	node1 := TreeNode{Value: 3}
 	node2 := TreeNode{Value: 9}
@@ -39,5 +63,6 @@ func main() {
 	node3.Left = &node4
 	node3.Right = &node5
 
-	maxDepth(&node1)
+	result := maxDepthQueue(&node1)
+	fmt.Printf("Max depth: %d\n", result)
 }

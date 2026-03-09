@@ -8,7 +8,6 @@ import (
 type TreeNode = util.TreeNode
 
 func invertTree(root *TreeNode) *TreeNode {
-
 	if root == nil {
 		return nil
 	}
@@ -17,6 +16,34 @@ func invertTree(root *TreeNode) *TreeNode {
 
 	invertTree(root.Left)
 	invertTree(root.Right)
+
+	return root
+}
+
+func invertDFS(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	queue := []*TreeNode{root}
+
+	for len(queue) > 0 {
+
+		node := queue[0]
+		queue = queue[1:]
+
+		if node.Left != nil && node.Right != nil {
+			node.Left, node.Right = node.Right, node.Left
+		}
+
+		if node.Left != nil {
+			queue = append(queue, node.Left)
+		}
+
+		if node.Right != nil {
+			queue = append(queue, node.Right)
+		}
+	}
 
 	return root
 }
@@ -64,7 +91,7 @@ func main() {
 	root1.Right.Right = &TreeNode{Value: 9}
 
 	fmt.Println("Before:", printLevelOrder(root1))
-	invertTree(root1)
+	invertDFS(root1)
 	fmt.Println("After: ", printLevelOrder(root1))
 	fmt.Println("Expected: [4,7,2,9,6,3,1]")
 

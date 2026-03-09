@@ -7,7 +7,9 @@ import (
 
 type TreeNode = util.TreeNode
 
-// Middle -> Left -> Right
+// dfsPreorder performs a depth-first preorder traversal (Root -> Left -> Right).
+// This traversal visits the current node first, then recursively visits the left subtree,
+// and finally the right subtree. Useful for creating a copy of the tree or prefix notation.
 func dfsPreorder(root *TreeNode) {
 	if root == nil {
 		return
@@ -18,30 +20,36 @@ func dfsPreorder(root *TreeNode) {
 	dfsPreorder(root.Right)
 }
 
-// Left -> Middle -> Right
+// dfsInorder performs a depth-first inorder traversal (Left -> Root -> Right).
+// This traversal visits the left subtree first, then the current node, then the right subtree.
+// For binary search trees, this produces values in ascending sorted order.
 func dfsInorder(root *TreeNode) {
 	if root == nil {
 		return
 	}
 
-	dfsPreorder(root.Left)
+	dfsInorder(root.Left)
 	fmt.Print(root.Value, " ")
-	dfsPreorder(root.Right)
+	dfsInorder(root.Right)
 }
 
-// Middle -> Left -> Right
+// dfsPostorder performs a depth-first postorder traversal (Left -> Right -> Root).
+// This traversal visits the left subtree, then the right subtree, and finally the current node.
+// Useful for deleting trees or evaluating postfix expressions.
 func dfsPostorder(root *TreeNode) {
 	if root == nil {
 		return
 	}
 
-	dfsPreorder(root.Left)
-	dfsPreorder(root.Right)
+	dfsPostorder(root.Left)
+	dfsPostorder(root.Right)
 	fmt.Print(root.Value, " ")
 }
 
-// Iterative - Using Stack
-func dfsIterative(root *TreeNode) {
+// dfsPreorderIterative performs an iterative preorder traversal using a stack.
+// This is the iterative equivalent of dfsPreorder, avoiding recursion.
+// Uses a stack (LIFO) to track nodes, pushing right child before left to maintain correct order.
+func dfsPreorderIterative(root *TreeNode) {
 	if root == nil {
 		return
 	}
@@ -49,22 +57,26 @@ func dfsIterative(root *TreeNode) {
 	stack := []*TreeNode{root}
 
 	for len(stack) > 0 {
-		node := stack[len(stack)-1]
+		// Pop from stack (LIFO - Last In First Out)
+		current := stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
 
-		fmt.Print(node.Value, " ")
+		fmt.Print(current.Value, " ")
 
-		if node.Right != nil {
-			stack = append(stack, node.Right)
+		// Push right first, then left, so left is processed first (LIFO order)
+		if current.Right != nil {
+			stack = append(stack, current.Right)
 		}
-		if node.Left != nil {
-			stack = append(stack, node.Left)
+		if current.Left != nil {
+			stack = append(stack, current.Left)
 		}
 	}
 }
 
-// DFS with collection - returns slice
-func dfsCollect(root *TreeNode) []int {
+// dfsPreorderCollect performs a preorder DFS traversal and collects all node values into a slice.
+// Returns a slice containing all node values in preorder sequence.
+// Uses a closure to maintain the result slice across recursive calls.
+func dfsPreorderCollect(root *TreeNode) []int {
 	result := []int{}
 	var dfs func(*TreeNode)
 	dfs = func(node *TreeNode) {
@@ -79,8 +91,10 @@ func dfsCollect(root *TreeNode) []int {
 	return result
 }
 
-// BFS - Using Queue
-func bfsIterative(root *TreeNode) {
+// bfsLevelOrder performs a breadth-first search (level-order) traversal using a queue.
+// Visits nodes level by level from left to right using a queue (FIFO).
+// Time complexity: O(n), Space complexity: O(w) where w is the maximum width of the tree.
+func bfsLevelOrder(root *TreeNode) {
 	if root == nil {
 		return
 	}
@@ -88,17 +102,18 @@ func bfsIterative(root *TreeNode) {
 	queue := []*TreeNode{root}
 
 	for len(queue) > 0 {
-		node := queue[0]
+		// Dequeue from front (FIFO - First In First Out)
+		current := queue[0]
 		queue = queue[1:]
 
-		fmt.Print(node.Value, " ")
+		fmt.Print(current.Value, " ")
 
-		if node.Left != nil {
-			queue = append(queue, node.Left)
+		// Enqueue children from left to right
+		if current.Left != nil {
+			queue = append(queue, current.Left)
 		}
-
-		if node.Right != nil {
-			queue = append(queue, node.Right)
+		if current.Right != nil {
+			queue = append(queue, current.Right)
 		}
 	}
 }
@@ -130,15 +145,15 @@ func main() {
 	dfsPostorder(root1)
 	fmt.Println()
 
-	fmt.Print("Iterative: ")
-	dfsIterative(root1)
+	fmt.Print("DFS Iterative: ")
+	dfsPreorderIterative(root1)
 	fmt.Println()
 
-	fmt.Print("BFS: ")
-	bfsIterative(root1)
+	fmt.Print("BFS Level-Order: ")
+	bfsLevelOrder(root1)
 	fmt.Println()
 
-	fmt.Println("Collected:", dfsCollect(root1))
+	fmt.Println("DFS Collected:", dfsPreorderCollect(root1))
 
 	// Test Case 2: Single node
 	fmt.Println("\n=== Test Case 2: Single Node ===")
@@ -210,7 +225,11 @@ func main() {
 	dfsPostorder(root6)
 	fmt.Println()
 
-	fmt.Print("Iterative: ")
-	dfsIterative(root6)
+	fmt.Print("DFS Iterative: ")
+	dfsPreorderIterative(root6)
+	fmt.Println()
+
+	fmt.Print("BFS Level-Order: ")
+	bfsLevelOrder(root6)
 	fmt.Println()
 }
